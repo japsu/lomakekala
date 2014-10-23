@@ -1,0 +1,47 @@
+doctype 5
+html
+  head
+    title {{ settings.LOMAKEKALA_INSTALLATION_NAME }}
+    link(rel='stylesheet', href='{{ STATIC_URL }}bootstrap/bootstrap.min.css')
+    link(rel='stylesheet', href='{{ STATIC_URL }}lomakekala.css')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  body
+    .navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          button(type="button", class="navbar-toggle", data-toggle="collapse", data-target="#base-navbar-collapse")
+            span(class="sr-only") Avaa valikko
+            span(class="icon-bar")
+            span(class="icon-bar")
+            span(class="icon-bar")
+
+          a.navbar-brand(href='{% url "lomakekala_index_view" %}') {{ settings.LOMAKEKALA_INSTALLATION_NAME }}
+        .collapse.navbar-collapse#base-navbar-collapse
+          ul.nav.navbar-nav
+          ul.nav.navbar-nav.navbar-right
+
+    #wrap
+      if messages
+        .messages.container
+          for message in messages
+            if message.tags
+              .alert(class="alert-{{ message.tags }}") {{ message|safe }}
+            else
+              .alert {{ message|safe }}
+
+      block content_full_width
+
+      .container.content
+        block content
+
+      #push
+
+    footer
+      .container
+        p.credit
+          small.text-muted
+            {{ LOMAKEKALA_APPLICATION_NAME }} &copy; 2014 Santtu Pajukanta
+
+    script(src='{{ STATIC_URL }}jquery-1.10.2.min.js')
+    script(src='{{ STATIC_URL }}bootstrap/bootstrap.min.js')
+    block extra_scripts
