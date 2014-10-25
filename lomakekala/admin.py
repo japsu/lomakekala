@@ -26,7 +26,7 @@ class MailHandlerRecipientInline(admin.TabularInline):
 class MailHandlerAdmin(admin.ModelAdmin):
     model = MailHandler
     inlines = (MailHandlerRecipientInline,)
-    list_display = ('handler',)
+    list_display = ('handler', 'subject_template')
 
 
 admin.site.register(HandlerType, HandlerTypeAdmin)

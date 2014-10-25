@@ -80,5 +80,7 @@ STATIC_ROOT = mkpath('static')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 LOMAKEKALA_APPLICATION_NAME = 'Lomakekala'
 LOMAKEKALA_INSTALLATION_NAME = 'Lomakekala test site'

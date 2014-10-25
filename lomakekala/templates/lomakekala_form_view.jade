@@ -1,5 +1,6 @@
 extends base
 - load crispy_forms_tags
 block content
-  .container
-    - crispy form
+  h2 {{ form_descriptor.name }}
+  p {{ form_descriptor.description }}
+  - crispy form

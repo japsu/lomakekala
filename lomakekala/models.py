@@ -10,7 +10,7 @@ class HandlerType(models.Model):
 
     def handle_valid_form(self, form, form_descriptor, handler):
         handle_func = get_code(self.code)
-        handle_func(form, form_descriptor, handler)
+        return handle_func(form, form_descriptor, handler)
 
     def __unicode__(self):
         return self.name
@@ -25,7 +25,7 @@ class Handler(models.Model):
         return self.name
 
     def handle_valid_form(self, form, form_descriptor):
-        self.handler_type.handle_valid_form(form, form_descriptor, self)
+        return self.handler_type.handle_valid_form(form, form_descriptor, self)
 
 
 class MailHandler(models.Model):
@@ -69,6 +69,11 @@ class Form(models.Model):
     name = models.CharField(max_length=63)
     slug = models.CharField(max_length=63, unique=True)
     code = models.CharField(max_length=255)
+    is_public = models.BooleanField(default=False)
+    description = models.TextField(blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.name
@@ -83,7 +88,9 @@ class Form(models.Model):
 
     def handle_valid_form(self, form):
         for handler in self.handlers:
-            handler.handle_valid_form(form, self)
+            result = handler.handle_valid_form(form, self)
+            if result is False:
+                break
 
     @property
     def handlers(self):

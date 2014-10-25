@@ -17,6 +17,9 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=63)),
                 ('slug', models.CharField(unique=True, max_length=63)),
                 ('code', models.CharField(max_length=255)),
+                ('is_public', models.BooleanField(default=False)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
             ],
             options={
             },
@@ -76,7 +79,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('display_name', models.CharField(max_length=255, blank=True)),
                 ('email_address', models.CharField(max_length=255)),
-                ('recipient_type', models.CharField(max_length=3, choices=[(b'to', b'To'), (b'cc', b'CC'), (b'bcc', b'BCC')])),
+                ('recipient_type', models.CharField(default=b'to', max_length=3, choices=[(b'to', b'To'), (b'cc', b'CC'), (b'bcc', b'BCC')])),
                 ('mail_handler', models.ForeignKey(to='lomakekala.MailHandler')),
             ],
             options={

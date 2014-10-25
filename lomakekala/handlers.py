@@ -1,5 +1,4 @@
-from django.core.mail import EmailMessage
-from django.template import Template, Context
+from django.conf import settings
 
 
 def save_model_form(model_form, form_descriptor, handler):
@@ -7,7 +6,10 @@ def save_model_form(model_form, form_descriptor, handler):
 
 
 def send_mail_sync(form, form_descriptor, handler):
-    mail_handler = handler.mail_handler
+    from django.core.mail import EmailMessage
+    from django.template import Template, Context
+
+    mail_handler = handler.mailhandler
 
     context = Context(dict(
         form.cleaned_data,

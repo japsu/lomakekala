@@ -1,4 +1,10 @@
 extends base
 block content
-  h1 {{ settings.LOMAKEKALA_INSTALLATION_NAME }}
+  h2 {{ settings.LOMAKEKALA_INSTALLATION_NAME }}
     small.text-muted &emsp;Julkiset lomakkeet
+
+  .list-group
+    for form in forms
+      a.list-group-item(href='{% url "lomakekala_form_view" form.slug %}')
+        h4.list-group-item-heading {{ form.name }}
+        p.list-group-item-text {{ form.description }}

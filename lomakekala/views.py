@@ -11,22 +11,31 @@ from .utils import get_code
 class FormView(View):
     http_method_names = ['get', 'post']
 
-    def get(self, request, form_slug):
+    def get_context_data(self, request, form_slug):
         form_descriptor = get_object_or_404(Form, slug=form_slug)
         form = form_descriptor.initialize_form(request)
-        return render(request, 'lomakekala_form_view.jade', dict(form=form))
+
+        return dict(
+            form_descriptor=form_descriptor,
+            form=form,
+        )
+
+    def get(self, request, form_slug):
+        vars = self.get_context_data(request, form_slug)
+        return render(request, 'lomakekala_form_view.jade', vars)
 
     def post(self, request, form_slug):
-        form_descriptor = get_object_or_404(Form, slug=form_slug)
-        form = form_descriptor.initialize_form(request)
+        vars = self.get_context_data(request, form_slug)
+        form = vars['form']
+        form_descriptor = vars['form_descriptor']
 
         if form.is_valid():
             form_descriptor.handle_valid_form(form)
-            return redirect('lomakekala_thanks_view')
+            return redirect('lomakekala_thanks_view', form_slug)
 
         else:
             messages.error(request, u'Ole hyvä ja tarkista lomake.')
-            return render(request, 'lomakekala_form_view.jade', dict(form=form))
+            return render(request, 'lomakekala_form_view.jade', vars)
 
 
 class IndexView(TemplateView):
@@ -34,7 +43,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context.update(forms=Form.objects.all())
+        context.update(forms=Form.objects.filter(is_public=True))
         return context
 
 

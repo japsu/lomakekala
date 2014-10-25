@@ -15,6 +15,7 @@ class TestForm(forms.ModelForm):
         self.helper = horizontal_form_helper()
         self.helper.layout = Layout(
             'foo',
+            indented_without_label('send_email'),
             indented_without_label(
                 Submit('submit', u'Lähetä', css_class='btn-success')
             )
@@ -22,3 +23,4 @@ class TestForm(forms.ModelForm):
 
     class Meta:
         model = TestFormModel
+        exclude = ('created_at', 'updated_at')
