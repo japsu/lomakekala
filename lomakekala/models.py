@@ -44,6 +44,16 @@ class MailHandler(models.Model):
 
         return [r.name_and_email for r in recipients]
 
+    def set_recipients(self, recipient_type, names_and_emails):
+        self.mailhandlerrecipient_set.filter(recipient_type=recipient_type).delete()
+
+        for display_name, email_address in names_and_emails:
+            self.mailhandlerrecipient_set.create(
+                display_name=display_name,
+                email_address=email_address,
+                recipient_type=recipient_type,
+            )
+
 
 RECIPIENT_TYPE_CHOICES = (('to', 'To'), ('cc', 'CC'), ('bcc', 'BCC'))
 

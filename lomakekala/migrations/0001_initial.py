@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
                 ('slug', models.CharField(unique=True, max_length=63)),
                 ('code', models.CharField(max_length=255)),
                 ('is_public', models.BooleanField(default=False)),
+                ('description', models.TextField(blank=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
             ],

@@ -2,7 +2,7 @@
 import os
 
 import django.conf.global_settings as defaults
-
+from lomakekala.default_settings import *
 
 def mkpath(*parts):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), '..', *parts))
@@ -82,5 +82,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOMAKEKALA_APPLICATION_NAME = 'Lomakekala'
+LOGOUT_URL = '/admin/logout/'
+
 LOMAKEKALA_INSTALLATION_NAME = 'Lomakekala test site'
+
