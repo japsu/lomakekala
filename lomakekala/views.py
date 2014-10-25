@@ -43,7 +43,10 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context.update(forms=Form.objects.filter(is_public=True))
+        context.update(
+            public_forms=Form.objects.filter(is_public=True),
+            private_forms=Form.objects.filter(is_public=False),
+        )
         return context
 
 

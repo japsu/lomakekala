@@ -1,10 +1,24 @@
 extends base
 block content
-  h2 {{ settings.LOMAKEKALA_INSTALLATION_NAME }}
-    small.text-muted &emsp;Julkiset lomakkeet
+  h2 Julkiset lomakkeet
 
-  .list-group
-    for form in forms
-      a.list-group-item(href='{% url "lomakekala_form_view" form.slug %}')
-        h4.list-group-item-heading {{ form.name }}
-        p.list-group-item-text {{ form.description }}
+  if public_forms.exists
+    .list-group
+      for form in public_forms
+        a.list-group-item(href='{% url "lomakekala_form_view" form.slug %}')
+          h4.list-group-item-heading {{ form.name }}
+          p.list-group-item-text {{ form.description }}
+  else
+    p.text-muted Ei julkisia lomakkeita.
+
+  if request.user.is_authenticated
+    h2 Yksityiset lomakkeet
+
+    if private_forms.exists
+      .list-group
+        for form in private_forms
+          a.list-group-item(href='{% url "lomakekala_form_view" form.slug %}')
+            h4.list-group-item-heading {{ form.name }}
+            p.list-group-item-text {{ form.description }}   
+    else
+      p.text-muted Ei yksityisiä lomakkeita.
