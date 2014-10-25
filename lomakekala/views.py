@@ -40,3 +40,7 @@ class IndexView(TemplateView):
 
 class ThanksView(TemplateView):
     template_name = 'lomakekala_thanks_view.jade'
+
+    def get(self, request, form_slug):
+        get_object_or_404(Form, slug=form_slug)
+        return super(ThanksView, self).get(request)

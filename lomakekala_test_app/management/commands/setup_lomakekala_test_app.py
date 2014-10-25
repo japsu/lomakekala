@@ -17,17 +17,12 @@ class Command(BaseCommand):
             user.set_password('mahti')
             user.save()
 
-        save_handler, unused = Handler.objects.get_or_create(slug='save', defaults=dict(
-            name='Save model form',
-            code='lomakekala.handlers:save_model_form',
-        ))
-
+        save_handler = Handler.objects.get(slug='save')
         form, created = Form.objects.get_or_create(slug='test', defaults=dict(
             name='Test form',
             code='lomakekala_test_app.forms:TestForm',
         ))
 
         if created:
-            form.handlers = [save_handler]
-            form.save()
+            form.set_handlers([save_handler])
 
