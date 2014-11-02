@@ -15,5 +15,6 @@ setup(
     author_email='santtu@pajukanta.fi',
     url='https://github.com/japsu/lomakekala',
     packages=find_packages(),
+    include_package_data=True,
     install_requires=requirements('requirements.txt')
 )
